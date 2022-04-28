@@ -1,0 +1,23 @@
+
+version: 2
+models:
+  - name: play_with_tests
+  - name: time
+
+sources:
+  - name: sample
+    database: snowflake_sample_data
+    schema: TPCDS_SF10TCL
+    tables: # This allows you to test on raw_data source vs upstream. 
+      - name: date_dim
+        # freshness: Dbt source snapshot-freshness
+        #   warn_after: {count: 12, period: hour}
+        #   error_after: {count: 24, period: hour}
+        columns:
+          - name: d_date_id
+            tests:
+              - unique
+              - not_null
+      - name: store
+      - name: promotion
+      - name: customer
